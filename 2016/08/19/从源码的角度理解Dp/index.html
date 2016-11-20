@@ -1,0 +1,645 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Dp、Sp、Px其实它们就是个度量单位，Px表示像素点， 1px = 1像素Dp和Sp，都表示和屏幕密度无关，不过后者只适用于字体大小。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从源码的角度理解Dp">
+<meta property="og:url" content="http://rikkko.com/2016/08/19/从源码的角度理解Dp/index.html">
+<meta property="og:site_name" content="星沉海底当窗见">
+<meta property="og:description" content="Dp、Sp、Px其实它们就是个度量单位，Px表示像素点， 1px = 1像素Dp和Sp，都表示和屏幕密度无关，不过后者只适用于字体大小。">
+<meta property="og:updated_time" content="2016-08-19T10:35:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从源码的角度理解Dp">
+<meta name="twitter:description" content="Dp、Sp、Px其实它们就是个度量单位，Px表示像素点， 1px = 1像素Dp和Sp，都表示和屏幕密度无关，不过后者只适用于字体大小。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"right","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://rikkko.com/2016/08/19/从源码的角度理解Dp/"/>
+
+  <title> 从源码的角度理解Dp | 星沉海底当窗见 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?7ccd1db3767a3e98de0fd7c94b4c96b2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">星沉海底当窗见</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">いっしょうけんめい</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                从源码的角度理解Dp
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-19T17:49:51+08:00" content="2016-08-19">
+              2016-08-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/19/从源码的角度理解Dp/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/19/从源码的角度理解Dp/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="Dp、Sp、Px"><a href="#Dp、Sp、Px" class="headerlink" title="Dp、Sp、Px"></a>Dp、Sp、Px</h4><p>其实它们就是个度量单位，<br>Px表示像素点， 1px = 1像素<br>Dp和Sp，都表示和屏幕密度无关，不过后者只适用于字体大小。<br><a id="more"></a></p>
+<h4 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h4><p>假设：<br>获取layout的宽度，返回的int数据代表像素值：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> layout_width = contxt.getResource().getDimension(R.dimen.layout_width);</div></pre></td></tr></table></figure></p>
+<p>对应dimens.xml文件中的数据为：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dimen</span> <span class="attr">name</span>=<span class="string">"layout_width"</span>&gt;</span>42dp<span class="tag">&lt;/<span class="name">dimen</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="跟着源码"><a href="#跟着源码" class="headerlink" title="跟着源码"></a>跟着源码</h4><p>看是如何获取dp对应的像素值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">    <span class="comment">/**</span></div><div class="line">     * Retrieve a dimensional for a particular resource ID.  Unit</div><div class="line">     * conversions are based on the current &#123;<span class="doctag">@link</span> DisplayMetrics&#125; associated</div><div class="line">     * with the resources.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> id The desired resource identifier, as generated by the aapt</div><div class="line">     *           tool. This integer encodes the package, type, and resource</div><div class="line">     *           entry. The value 0 is an invalid identifier.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span> Resource dimension value multiplied by the appropriate</div><div class="line">     * metric.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@throws</span> NotFoundException Throws NotFoundException if the given ID does not exist.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@see</span> #getDimensionPixelOffset</div><div class="line">     * <span class="doctag">@see</span> #getDimensionPixelSize</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">getDimension</span><span class="params">(<span class="keyword">int</span> id)</span> <span class="keyword">throws</span> NotFoundException </span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (mAccessLock) &#123;</div><div class="line">            TypedValue value = mTmpValue;</div><div class="line">            <span class="keyword">if</span> (value == <span class="keyword">null</span>) &#123;</div><div class="line">                mTmpValue = value = <span class="keyword">new</span> TypedValue();</div><div class="line">            &#125;</div><div class="line">            getValue(id, value, <span class="keyword">true</span>);</div><div class="line">            <span class="keyword">if</span> (value.type == TypedValue.TYPE_DIMENSION) &#123;</div><div class="line">                <span class="keyword">return</span> TypedValue.complexToDimension(value.data, mMetrics);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NotFoundException(</div><div class="line">                    <span class="string">"Resource ID #0x"</span> + Integer.toHexString(id) + <span class="string">" type #0x"</span></div><div class="line">                    + Integer.toHexString(value.type) + <span class="string">" is not valid"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>根据英文注释，这个方法，根据id值，返回对应的dimens数据。其中<strong>TypeValue</strong>是资源数据容器，用于Resource类中，主要成员变量有type、string、data、density等等。<br>在getValue方法中，由id值来初始化value，这是个jni方法，具体涉及到aapt的资源打包，此处不深入了。有兴趣的话，可以研究下老罗的这篇文章：<br>Android应用程序资源的编译和打包过程分析<br>getValue完事之后，对value的type进行判断，只有Dimension类型的数据才能调用下一步的方法，毕竟也不能保证误操作getDimension()方法中会不会传进一个字符id。<br>complexToDimension方法最后会调用到applyDimension方法，<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">float</span> <span class="title">applyDimension</span><span class="params">(<span class="keyword">int</span> unit, <span class="keyword">float</span> value,</span></span></div><div class="line">                                       DisplayMetrics metrics)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">switch</span> (unit) &#123;</div><div class="line">        <span class="keyword">case</span> COMPLEX_UNIT_PX:</div><div class="line">            <span class="keyword">return</span> value;</div><div class="line">        <span class="keyword">case</span> COMPLEX_UNIT_DIP:</div><div class="line">            <span class="keyword">return</span> value * metrics.density;</div><div class="line">        <span class="keyword">case</span> COMPLEX_UNIT_SP:</div><div class="line">            <span class="keyword">return</span> value * metrics.scaledDensity;</div><div class="line">        <span class="keyword">case</span> COMPLEX_UNIT_PT:</div><div class="line">            <span class="keyword">return</span> value * metrics.xdpi * (<span class="number">1.0f</span>/<span class="number">72</span>);</div><div class="line">        <span class="keyword">case</span> COMPLEX_UNIT_IN:</div><div class="line">            <span class="keyword">return</span> value * metrics.xdpi;</div><div class="line">        <span class="keyword">case</span> COMPLEX_UNIT_MM:</div><div class="line">            <span class="keyword">return</span> value * metrics.xdpi * (<span class="number">1.0f</span>/<span class="number">25.4f</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>其中，DisplayMetrics也是一个重要的数据容器，记录了重要的显示数据，比如屏幕宽度、高度、密度等。unit数据是从先前的TypeValue的data数据中获取，对了，再重申一遍，我们要返回的是像素值:<br>—   如果unit是PX，直接返回数值；<br>— 如果是DP，则将数值乘以屏幕像素密度。</p>
+<p>以下引用<a href="http://blog.csdn.net/wrg_20100512/article/details/51295317" target="_blank" rel="external">那些值得你去细细研究的Drawable适配</a>   </p>
+<blockquote>
+<p>dp也叫dip(density independent pixel)直译为密度无关的像素。我们猜测如果使用了这个单位，在不同屏幕密度的设备上显示的长度就会是相同的。1dp在mdpi设备下等于1px，在hdpi设备下等于1.5px，同样的在xxhdpi设备下1dp=3px。因此推断出，metrics.density = px值/dp值。<br>不过设备的密度值是死的，它是一个比例因子，density = 像素值/160， mdpi的像素值为160dpi，因此它的density = 1，所以在mdpi下1dp = 1 px。</p>
+</blockquote>
+<h4 id="回到例子"><a href="#回到例子" class="headerlink" title="回到例子"></a>回到例子</h4><p>因此上述例子中，在mdpi下最终获取的int layout_width = 42，hdpi下是63，以此类推。<br>— 如果是SP，这个单位和字体大小有关，scaledDensity是系统字体比例因子，在有些手机的老人机模式中，一般会设置该数值大于1，因此所有应用的字体都看起来很大。<br>如果你不希望字体大小跟着scaledDensity走怎么办呢？<br><strong>setTextSize</strong>传入方法<br><code>TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, size, metrics)</code><br>unit改为PX就好了，跟着像素走，缺点也是显而易见的，那就是不同屏幕密度，大小也会不一样，只能算一个规避简易模式这个大坑的不得已的处理手段。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/18/吃蘑菇/" rel="next" title="吃蘑菇">
+                <i class="fa fa-chevron-left"></i> 吃蘑菇
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/06/君自故乡来/" rel="prev" title="君自故乡来">
+                君自故乡来 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/19/从源码的角度理解Dp/"
+           data-title="从源码的角度理解Dp" data-url="http://rikkko.com/2016/08/19/从源码的角度理解Dp/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://obw36csom.bkt.clouddn.com/selfile.jpg"
+               alt="Riko" />
+          <p class="site-author-name" itemprop="name">Riko</p>
+          <p class="site-description motion-element" itemprop="description">尽情享受没有答案的人生</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/likkka" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/ipompeii" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:wadashiwalika@gmail.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Dp、Sp、Px"><span class="nav-number">1.</span> <span class="nav-text">Dp、Sp、Px</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举个例子"><span class="nav-number">2.</span> <span class="nav-text">举个例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#跟着源码"><span class="nav-number">3.</span> <span class="nav-text">跟着源码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回到例子"><span class="nav-number">4.</span> <span class="nav-text">回到例子</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Riko</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"rio"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
