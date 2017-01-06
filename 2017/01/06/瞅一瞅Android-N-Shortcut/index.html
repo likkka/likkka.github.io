@@ -93,7 +93,7 @@
 <meta property="og:image" content="http://rikkko.com/images/demo1.png">
 <meta property="og:image" content="http://rikkko.com/images/shortcut_layout1.png">
 <meta property="og:image" content="http://rikkko.com/images/shortcutmanager.png">
-<meta property="og:updated_time" content="2017-01-06T12:57:04.000Z">
+<meta property="og:updated_time" content="2017-01-06T13:02:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="瞅一瞅Android_N_Shortcut">
 <meta name="twitter:description" content="Android N Launcher带来了Shortcut新特性，类似于iOS的Force Touch，支持用户在长按应用时，弹出该应用的其他快捷入口。">
@@ -334,7 +334,7 @@
 <p>根据代码可知，展开shortcut菜单和拖拽事件可以同时进行，实际用户体验不优雅，估计这是谷歌Launcher开发者的无奈之举，毕竟需要兼容所有Android设备，没有类似iPhone的压力屏。</p>
 <hr>
 <h4 id="V-View"><a href="#V-View" class="headerlink" title="V(View)"></a>V(View)</h4><p>View受Controller影响，根据Controller的逻辑，桌面弹出菜单View类关系如下，DeepShortcutsContainer是整个菜单界面，DeepShortcutsView是它的子View，也是每个菜单项，具体的动画分析在其他文档中解析：</p>
-<div align="center"><br><img src="/images/shortcut_layout1.png" width="270" height="480"><br></div><br>————————————————<br><br><br><br><br><br>至此，以简单的流程图总结桌面的shortcut加载和启动流程，其中动态和静态的shortcut数据都是由系统来控制，一旦有外部数据源变化，桌面只需要向系统重新query即可获得所有数据，简单易维护，这是Launcher3作为系统app沾到的大大好处，如果是独立app来做，需要其他策略支持：<br><div align="center"><br><img src="/images/shortcutmanager.png"><br></div>    
+<div align="center"><br><img src="/images/shortcut_layout1.png" width="270" height="480"><br></div><br>—————————————————-<br>至此，以简单的流程图总结桌面的shortcut加载和启动流程，其中动态和静态的shortcut数据都是由系统来控制，一旦有外部数据源变化，桌面只需要向系统重新query即可获得所有数据，简单易维护，这是Launcher3作为系统app沾到的大大好处，如果是独立app来做，需要其他策略支持：<br><div align="center"><br><img src="/images/shortcutmanager.png"><br></div>    
 
       
     </div>
