@@ -238,6 +238,276 @@
             
               
                 
+                <a class="post-title-link" href="/2017/01/06/瞅一瞅Android-N-Shortcut/" itemprop="url">
+                  瞅一瞅Android_N_Shortcut
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-06T20:39:05+08:00" content="2017-01-06">
+              2017-01-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/06/瞅一瞅Android-N-Shortcut/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/06/瞅一瞅Android-N-Shortcut/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Android N Launcher带来了Shortcut新特性，类似于iOS的Force Touch，支持用户在<strong>长按</strong>应用时，弹出该应用的其他快捷入口。如下图所示：  </p>
+<div align="center"><br><img src="/images/demo1.png" width="270" height="480"><br></div>        
+
+
+
+<p>该接口针对API level 25 及以上的手机系统版本，shortcuts可以定义intent使得app可以在支持的桌面上建立快捷入口。<br>shortcuts有以下功能：   </p>
+<ol>
+<li>地图app中给用户指定位置导航；    </li>
+<li>im app中发送消息；      </li>
+<li>视频app中快速观看下一集电视剧；   </li>
+<li>游戏app中快速加载上一次的进度；  </li>
+</ol>
+<p>开发者可以使用两种类型的shortcuts：    </p>
+<ol>
+<li>静态shortcuts ：开发者在apk中定义资源文件，因此必须等app更新后，shortcuts才能随之更新；</li>
+<li>动态shortcuts：应用可以在运行时使用ShortcutManager动态创建，更新，删除shortcuts数据。</li>
+</ol>
+<p>如何创建静态和动态shortuts，可参考 <a href="https://developer.android.com/guide/topics/ui/shortcuts.html" target="_blank" rel="external">https://developer.android.com/guide/topics/ui/shortcuts.html</a></p>
+<p>桌面是典型的MVC架构工程，以下便从MVC的角度来分析Shortcut功能，参考代码为<strong>Android 7.1 Launcher3</strong>工程代代码。</p>
+<hr>
+<h4 id="M-Model"><a href="#M-Model" class="headerlink" title="M(Model)"></a>M(Model)</h4><p>桌面的加载从LauncherModel类开始，此类负责后台子线程读取/修改应用db数据，以下为负责后台加载桌面数据的子线程run方法,第三步为加载Shortcut数据：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            ......</div><div class="line">            keep_running: &#123;</div><div class="line">                <span class="keyword">if</span> (DEBUG_LOADERS) Log.d(TAG, <span class="string">"step 1: loading workspace"</span>);</div><div class="line">                loadAndBindWorkspace(); <span class="comment">//加载主界面应用</span></div><div class="line">                ......</div><div class="line">                <span class="comment">// second step</span></div><div class="line">                <span class="keyword">if</span> (DEBUG_LOADERS) Log.d(TAG, <span class="string">"step 2: loading all apps"</span>);</div><div class="line">                loadAndBindAllApps(); <span class="comment">//加载所有应用界面</span></div><div class="line">                .......</div><div class="line">                <span class="comment">// third step</span></div><div class="line">                <span class="keyword">if</span> (DEBUG_LOADERS) Log.d(TAG, <span class="string">"step 3: loading deep shortcuts"</span>);</div><div class="line">                loadAndBindDeepShortcuts();<span class="comment">//加载shortcut数据</span></div><div class="line">            &#125;</div><div class="line">            .......</div><div class="line">        &#125;</div></pre></td></tr></table></figure></p>
+<p>loadAndBindDeepShortcuts方法实现如下,可知此方法会将从系统中查询到的shortcut数据保存到本地HashMap成员变量<strong>mBgDeepShortcutMap</strong>{key：ComponentName, value：ShortcutIdList}里, 并在bindDeepShortcuts方法中将mBgDeepShortcutMap更新到Launcher.java中的HashMap成员变量<strong>mDeepShortcutMap</strong>, Launcher文件相当于MVC中的C（Controller）角色：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">loadAndBindDeepShortcuts</span><span class="params">()</span> </span>&#123;</div><div class="line">            .......</div><div class="line">           <span class="keyword">if</span> (!mDeepShortcutsLoaded) &#123;</div><div class="line">               mBgDeepShortcutMap.clear();</div><div class="line">               mHasShortcutHostPermission = mDeepShortcutManager.hasHostPermission();</div><div class="line">               <span class="keyword">if</span> (mHasShortcutHostPermission) &#123; <span class="comment">//确认权限</span></div><div class="line">                   <span class="keyword">for</span> (UserHandleCompat user : mUserManager.getUserProfiles()) &#123;</div><div class="line">                       <span class="keyword">if</span> (mUserManager.isUserUnlocked(user)) &#123;</div><div class="line">                           List&lt;ShortcutInfoCompat&gt; shortcuts = mDeepShortcutManager</div><div class="line">                                   .queryForAllShortcuts(user); <span class="comment">//从系统中读取shortcut信息</span></div><div class="line">                           updateDeepShortcutMap(<span class="keyword">null</span>, user, shortcuts);</div><div class="line">                       &#125;</div><div class="line">                   &#125;</div><div class="line">               &#125;</div><div class="line">           .......</div><div class="line">           bindDeepShortcuts();</div><div class="line">       &#125;</div></pre></td></tr></table></figure></p>
+<p>由Google API Guides可知，上述加载Shortcut过程对静态/动态shortcut并无做区分，只需要桌面在加载过程时简单去查询即可获得相关数据。</p>
+<hr>
+<h4 id="C-Controller"><a href="#C-Controller" class="headerlink" title="C(Controller)"></a>C(Controller)</h4><p>目前shortcut的触发场景只有桌面长按触发，根据使用体验便可知Launcher的onLongClick事件处理。根据之前在LauncherModel更新的HashMap数据<strong>mDeepShortcutMap</strong>来判断长按对应的app是否含有shortcut数据，来决定是否展开shortcut菜单，看代码更是一目了然：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (!(itemUnderLongClick <span class="keyword">instanceof</span> Folder || isAllAppsButton)) &#123;</div><div class="line">                    ......</div><div class="line">                    <span class="keyword">if</span> (itemUnderLongClick <span class="keyword">instanceof</span> BubbleTextView) &#123;</div><div class="line">                        BubbleTextView icon = (BubbleTextView) itemUnderLongClick;</div><div class="line">                        <span class="keyword">if</span> (icon.hasDeepShortcuts()) &#123;</div><div class="line">                            DeepShortcutsContainer dsc = DeepShortcutsContainer.showForIcon(icon);</div><div class="line">                            ......</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    mWorkspace.startDrag(longClickCellInfo, dragOptions);</div><div class="line">                &#125;</div></pre></td></tr></table></figure></p>
+<p>根据代码可知，展开shortcut菜单和拖拽事件可以同时进行，实际用户体验不优雅，估计这是谷歌Launcher开发者的无奈之举，毕竟需要兼容所有Android设备，没有类似iPhone的压力屏。</p>
+<hr>
+<h4 id="V-View"><a href="#V-View" class="headerlink" title="V(View)"></a>V(View)</h4><p>View受Controller影响，根据Controller的逻辑，桌面弹出菜单View类关系如下，DeepShortcutsContainer是整个菜单界面，DeepShortcutsView是它的子View，也是每个菜单项，具体的动画分析在其他文档中解析：</p>
+<div align="center"><br><img src="/images/shortcut_layout1.png" width="270" height="480"><br></div><br>——————————————–<br><br>#### 总结<br><br>至此，以简单的流程图总结桌面的shortcut加载和启动流程，其中动态和静态的shortcut数据都是由系统来控制，一旦有外部数据源变化，桌面只需要向系统重新query即可获得所有数据，简单易维护，这是Launcher3作为系统app沾到的大大好处，如果是独立app来做，需要其他策略支持：<br><div align="center"><br><img src="/images/shortcutmanager.png"><br></div>    
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/18/不停地忘记/" itemprop="url">
+                  不停地忘记
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-18T22:29:22+08:00" content="2016-12-18">
+              2016-12-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/声色犬马/" itemprop="url" rel="index">
+                    <span itemprop="name">声色犬马</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/18/不停地忘记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/18/不停地忘记/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>凛冬已至。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/12/18/不停地忘记/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/11/20/情随境迁/" itemprop="url">
                   情随境迁
                 </a>
@@ -1193,254 +1463,13 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/13/Moon/" itemprop="url">
-                  Moon
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-13T23:40:08+08:00" content="2016-08-13">
-              2016-08-13
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/声色犬马/" itemprop="url" rel="index">
-                    <span itemprop="name">声色犬马</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/13/Moon/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/13/Moon/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="http://obw36csom.bkt.clouddn.com/moon.jpg" alt="moon"></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/13/Moon/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/07/My-Valentines-Day/" itemprop="url">
-                  My Valentines Day 
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-07T16:52:42+08:00" content="2016-08-07">
-              2016-08-07
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/声色犬马/" itemprop="url" rel="index">
-                    <span itemprop="name">声色犬马</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/07/My-Valentines-Day/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/07/My-Valentines-Day/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>中午随便白灼了些秋葵和木耳，无聊又拿起相机。</p>
-<p><img src="http://obw36csom.bkt.clouddn.com/flammulina.jpg" alt=""></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/07/My-Valentines-Day/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1479,7 +1508,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1554,8 +1583,8 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
