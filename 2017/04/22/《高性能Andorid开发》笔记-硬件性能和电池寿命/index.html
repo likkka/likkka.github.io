@@ -84,15 +84,19 @@
 
 
 
+<meta name="description" content="能耗统计文件反编译framework-res.apk得到的power_profile文件列举了该设备的硬件耗电数值，参考该文件可知道。（注：power_profile为什么放在framework-res.apk里？大致反编译了framework-res，里面放的是系统资源，比如默认的系统图标等。因power_profile是静态数据，放这也算是系统资源数据。）
+App唤醒设备的接口和方式：Wak">
 <meta property="og:type" content="article">
-<meta property="og:title" content="吃蘑菇">
-<meta property="og:url" content="http://rikkko.com/2016/08/18/吃蘑菇/index.html">
+<meta property="og:title" content="《高性能Andorid开发》笔记 -- 硬件性能和电池寿命">
+<meta property="og:url" content="http://rikkko.com/2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/index.html">
 <meta property="og:site_name" content="星沉海底当窗见">
-<meta property="og:image" content="http://obw36csom.bkt.clouddn.com/chimogu.jpeg">
-<meta property="og:updated_time" content="2016-08-18T05:17:51.000Z">
+<meta property="og:description" content="能耗统计文件反编译framework-res.apk得到的power_profile文件列举了该设备的硬件耗电数值，参考该文件可知道。（注：power_profile为什么放在framework-res.apk里？大致反编译了framework-res，里面放的是系统资源，比如默认的系统图标等。因power_profile是静态数据，放这也算是系统资源数据。）
+App唤醒设备的接口和方式：Wak">
+<meta property="og:updated_time" content="2017-04-22T06:03:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="吃蘑菇">
-<meta name="twitter:image" content="http://obw36csom.bkt.clouddn.com/chimogu.jpeg">
+<meta name="twitter:title" content="《高性能Andorid开发》笔记 -- 硬件性能和电池寿命">
+<meta name="twitter:description" content="能耗统计文件反编译framework-res.apk得到的power_profile文件列举了该设备的硬件耗电数值，参考该文件可知道。（注：power_profile为什么放在framework-res.apk里？大致反编译了framework-res，里面放的是系统资源，比如默认的系统图标等。因power_profile是静态数据，放这也算是系统资源数据。）
+App唤醒设备的接口和方式：Wak">
 
 
 
@@ -113,9 +117,9 @@
 
 
 
-  <link rel="canonical" href="http://rikkko.com/2016/08/18/吃蘑菇/"/>
+  <link rel="canonical" href="http://rikkko.com/2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/"/>
 
-  <title> 吃蘑菇 | 星沉海底当窗见 </title>
+  <title> 《高性能Andorid开发》笔记 -- 硬件性能和电池寿命 | 星沉海底当窗见 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -235,7 +239,7 @@
             
             
               
-                吃蘑菇
+                《高性能Andorid开发》笔记 -- 硬件性能和电池寿命
               
             
           </h1>
@@ -247,8 +251,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-18T13:03:19+08:00" content="2016-08-18">
-              2016-08-18
+            <time itemprop="dateCreated" datetime="2017-04-22T13:50:45+08:00" content="2017-04-22">
+              2017-04-22
             </time>
           </span>
 
@@ -261,8 +265,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/声色犬马/" itemprop="url" rel="index">
-                    <span itemprop="name">声色犬马</span>
+                  <a href="/categories/Android笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android笔记</span>
                   </a>
                 </span>
 
@@ -277,8 +281,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/08/18/吃蘑菇/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/18/吃蘑菇/" itemprop="commentsCount"></span>
+                <a href="/2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -301,11 +305,13 @@
       
 
       
-        <p><img src="http://obw36csom.bkt.clouddn.com/chimogu.jpeg" alt=""></p>
-<a id="more"></a>
-<p>黄金菇白灼之后，金色褪色了，像个普通蘑菇该有的素素静静的样子，蘸蚝油，鲜美很。</p>
-<p>想到很多事情，何当共剪西窗烛，却话巴山夜雨时。</p>
-<p>这个城市飘起了雨，一阵又一阵，阴晦潮湿，对于蘑菇的生长倒是极好的。</p>
+        <a id="more"></a>
+<h4 id="能耗统计文件"><a href="#能耗统计文件" class="headerlink" title="能耗统计文件"></a>能耗统计文件</h4><p>反编译framework-res.apk得到的power_profile文件列举了该设备的硬件耗电数值，参考该文件可知道。<br>（注：power_profile为什么放在framework-res.apk里？大致反编译了framework-res，里面放的是系统资源，比如默认的系统图标等。因power_profile是静态数据，放这也算是系统资源数据。）</p>
+<h4 id="App唤醒设备的接口和方式："><a href="#App唤醒设备的接口和方式：" class="headerlink" title="App唤醒设备的接口和方式："></a>App唤醒设备的接口和方式：</h4><p>WakeLock和Alarm<br>可以使用adb shell dumpsys batterystats 检测哪些app使用了上述唤醒方式。</p>
+<h4 id="系统的唤醒反抗："><a href="#系统的唤醒反抗：" class="headerlink" title="系统的唤醒反抗："></a>系统的唤醒反抗：</h4><p>Doze模式，推迟wakelock和alarm到闲置维护期。</p>
+<h4 id="Android-M中-新feature："><a href="#Android-M中-新feature：" class="headerlink" title="Android M中 新feature："></a>Android M中 新feature：</h4><p>系统休眠 standby，阻止不常用的app试图连接网络。可以使用adb shell dumpsys usagestats，该方法会列举所有应用的最近使用时间，使用时长等。</p>
+<h4 id="Android-L-新feature："><a href="#Android-L-新feature：" class="headerlink" title="Android L 新feature："></a>Android L 新feature：</h4><p>JobSchedule：调度属于系统层级，唤醒设备可以做到和其他app保持同步，比如5个应用都需后台每分钟下载一张图表，五分钟可能会唤醒设备25次，但是有了Jobschedule，只需要5次。</p>
+<h3 id="基本耗电分析："><a href="#基本耗电分析：" class="headerlink" title="基本耗电分析："></a>基本耗电分析：</h3><h4 id="设置–-gt-电量管理"><a href="#设置–-gt-电量管理" class="headerlink" title="设置–&gt; 电量管理"></a>设置–&gt; 电量管理</h4><h4 id="电能统计："><a href="#电能统计：" class="headerlink" title="电能统计："></a>电能统计：</h4><p>统计之前需要先做重置工作：<br>adb shell dumpsys batterystats –reset<br>开启报告全部wakelock的功能：<br>adb shell dumpsys batterystats –enable full-wake-history<br>显示上次充电后的所有电能数据：<br>adb shell dumpsys batterystats –charged<br>可视化工具：battery historian：<br>安装Docker后，运行docker run -p 8888:9999 gcr.io/android-battery-historian:2.1 –port 9999命令，<br>打开adb logreport &gt; report.txt 生成的文件。<br>在Battery Historian中，最关心的是WakeLock的唤醒次数，因为WakeLock对耗电影响较大（强制不灭屏，后台开启服务等）</p>
 
       
     </div>
@@ -331,17 +337,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/17/种蘑菇/" rel="next" title="种蘑菇">
-                <i class="fa fa-chevron-left"></i> 种蘑菇
+              <a href="/2017/03/11/往事不可追/" rel="next" title="往事不可追">
+                <i class="fa fa-chevron-left"></i> 往事不可追
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/19/从源码的角度理解Dp/" rel="prev" title="从源码的角度理解Dp">
-                从源码的角度理解Dp <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -367,8 +369,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/08/18/吃蘑菇/"
-           data-title="吃蘑菇" data-url="http://rikkko.com/2016/08/18/吃蘑菇/">
+      <div class="ds-thread" data-thread-key="2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/"
+           data-title="《高性能Andorid开发》笔记 -- 硬件性能和电池寿命" data-url="http://rikkko.com/2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/">
       </div>
     
   </div>
@@ -481,7 +483,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#能耗统计文件"><span class="nav-number">1.</span> <span class="nav-text">能耗统计文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#App唤醒设备的接口和方式："><span class="nav-number">2.</span> <span class="nav-text">App唤醒设备的接口和方式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#系统的唤醒反抗："><span class="nav-number">3.</span> <span class="nav-text">系统的唤醒反抗：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Android-M中-新feature："><span class="nav-number">4.</span> <span class="nav-text">Android M中 新feature：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Android-L-新feature："><span class="nav-number">5.</span> <span class="nav-text">Android L 新feature：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本耗电分析："><span class="nav-number"></span> <span class="nav-text">基本耗电分析：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置–-gt-电量管理"><span class="nav-number">1.</span> <span class="nav-text">设置–> 电量管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#电能统计："><span class="nav-number">2.</span> <span class="nav-text">电能统计：</span></a></li></ol></div>
             
           </div>
         </section>

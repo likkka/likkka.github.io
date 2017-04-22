@@ -238,6 +238,132 @@
             
               
                 
+                <a class="post-title-link" href="/2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/" itemprop="url">
+                  《高性能Andorid开发》笔记 -- 硬件性能和电池寿命
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-22T13:50:45+08:00" content="2017-04-22">
+              2017-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h4 id="能耗统计文件"><a href="#能耗统计文件" class="headerlink" title="能耗统计文件"></a>能耗统计文件</h4><p>反编译framework-res.apk得到的power_profile文件列举了该设备的硬件耗电数值，参考该文件可知道。<br>（注：power_profile为什么放在framework-res.apk里？大致反编译了framework-res，里面放的是系统资源，比如默认的系统图标等。因power_profile是静态数据，放这也算是系统资源数据。）</p>
+<h4 id="App唤醒设备的接口和方式："><a href="#App唤醒设备的接口和方式：" class="headerlink" title="App唤醒设备的接口和方式："></a>App唤醒设备的接口和方式：</h4><p>WakeLock和Alarm<br>可以使用adb shell dumpsys batterystats 检测哪些app使用了上述唤醒方式。</p>
+<h4 id="系统的唤醒反抗："><a href="#系统的唤醒反抗：" class="headerlink" title="系统的唤醒反抗："></a>系统的唤醒反抗：</h4><p>Doze模式，推迟wakelock和alarm到闲置维护期。</p>
+<h4 id="Android-M中-新feature："><a href="#Android-M中-新feature：" class="headerlink" title="Android M中 新feature："></a>Android M中 新feature：</h4><p>系统休眠 standby，阻止不常用的app试图连接网络。可以使用adb shell dumpsys usagestats，该方法会列举所有应用的最近使用时间，使用时长等。</p>
+<h4 id="Android-L-新feature："><a href="#Android-L-新feature：" class="headerlink" title="Android L 新feature："></a>Android L 新feature：</h4><p>JobSchedule：调度属于系统层级，唤醒设备可以做到和其他app保持同步，比如5个应用都需后台每分钟下载一张图表，五分钟可能会唤醒设备25次，但是有了Jobschedule，只需要5次。</p>
+<h3 id="基本耗电分析："><a href="#基本耗电分析：" class="headerlink" title="基本耗电分析："></a>基本耗电分析：</h3><h4 id="设置–-gt-电量管理"><a href="#设置–-gt-电量管理" class="headerlink" title="设置–&gt; 电量管理"></a>设置–&gt; 电量管理</h4><h4 id="电能统计："><a href="#电能统计：" class="headerlink" title="电能统计："></a>电能统计：</h4><p>统计之前需要先做重置工作：<br>adb shell dumpsys batterystats –reset<br>开启报告全部wakelock的功能：<br>adb shell dumpsys batterystats –enable full-wake-history<br>显示上次充电后的所有电能数据：<br>adb shell dumpsys batterystats –charged<br>可视化工具：battery historian：<br>安装Docker后，运行docker run -p 8888:9999 gcr.io/android-battery-historian:2.1 –port 9999命令，<br>打开adb logreport &gt; report.txt 生成的文件。<br>在Battery Historian中，最关心的是WakeLock的唤醒次数，因为WakeLock对耗电影响较大（强制不灭屏，后台开启服务等）</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/03/11/往事不可追/" itemprop="url">
                   往事不可追
                 </a>
@@ -1315,128 +1441,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/18/吃蘑菇/" itemprop="url">
-                  吃蘑菇
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-18T13:03:19+08:00" content="2016-08-18">
-              2016-08-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/声色犬马/" itemprop="url" rel="index">
-                    <span itemprop="name">声色犬马</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/18/吃蘑菇/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/18/吃蘑菇/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="http://obw36csom.bkt.clouddn.com/chimogu.jpeg" alt=""></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/18/吃蘑菇/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1482,7 +1486,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-count">14</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1490,7 +1494,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
