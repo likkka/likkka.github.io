@@ -309,12 +309,27 @@
         
           
             <a id="more"></a>
-<h4 id="1-UI性能标准："><a href="#1-UI性能标准：" class="headerlink" title="1.UI性能标准："></a>1.UI性能标准：</h4><p>卡顿（丢帧）：1s/60fps</p>
+<h4 id="1-UI性能标准"><a href="#1-UI性能标准" class="headerlink" title="1.UI性能标准"></a>1.UI性能标准</h4><p>卡顿（丢帧）：1s/60fps</p>
 <h4 id="2-Android-UI和渲染性能改进历史"><a href="#2-Android-UI和渲染性能改进历史" class="headerlink" title="2.Android UI和渲染性能改进历史"></a>2.Android UI和渲染性能改进历史</h4><ul>
 <li>Honeycomb：App可以使用GPU硬件加速</li>
 <li>Ice Cream Sandwich及其以上默认开启硬件加速</li>
-<li>JellyBean 4.1及其以上，“黄油计划”<h4 id="3-创建视图："><a href="#3-创建视图：" class="headerlink" title="3.创建视图："></a>3.创建视图：</h4>尽可能保持视图扁平化：重复测量（RelativeLayout和设置weight属性的LinearLayout）。<br>工具：</li>
-<li>Hierarchy Viewer : 研究视图层次，减少视图层的深度<br>TreeView ：点击彩色venn按钮，可以加载每个view 测量、布局、绘制的具体时间.<h4 id="4-资源缩减："><a href="#4-资源缩减：" class="headerlink" title="4.资源缩减："></a>4.资源缩减：</h4>2014 年，Instagram 将标题栏使用的资源数量从 29 个减少到了 8 个（<a href="http://instagram-engineering.tumblr.com/post/97740520316/betterandroid）。启动时间缩短了" target="_blank" rel="external">http://instagram-engineering.tumblr.com/post/97740520316/betterandroid）。启动时间缩短了</a> 10%~20%（因设备而异）。他们通过资源着色缩减资源，也就是加载时仅加载一个资源，然后在运行时通过 ColorFilter 对资源进行着色。<br>过度绘制：屏幕的重绘<br>检测：<br>1.设置开发者选项，打开布局绘制 Debug GPU Overdraw 选项<br>2.Hierarchy Viewer中的viewhierarchy导出为psd文件，用GIMP文件打开观察各个layer叠加情况。<br>kk版本有过度绘制避免机制—【Overdraw Avoidance】<h4 id="5-卡顿分析："><a href="#5-卡顿分析：" class="headerlink" title="5 卡顿分析："></a>5 卡顿分析：</h4>Android Marshmallow 在 gfxinfo 库里增加了另一个好用的测试工具:<br>adb shell dumpsys gfxinfo <packagename> framestats。它能够输出一张表格，该表格可以用逗号分隔每一帧事件的具体耗时。列名没有给出，但在 Android 开发者网站（<a href="https://developer.android.com/preview/testing/performance.html#timing-info）里有具体的解释。为了算出渲染中每一步的耗时，必须计算出" target="_blank" rel="external">https://developer.android.com/preview/testing/performance.html#timing-info）里有具体的解释。为了算出渲染中每一步的耗时，必须计算出</a> framestats 值之间的差异。为了简化运算，我创建了一个电子表格（<a href="https://docs.google.com/spreadsheets/d/1SppGcFmeZXe1IHPC9UZ83ChxhjxSB2aZnKnJvkFUTM/edit?usp=sharing）用来计算感兴趣的值。当你粘贴上原始的" target="_blank" rel="external">https://docs.google.com/spreadsheets/d/1SppGcFmeZXe1IHPC9UZ83ChxhjxSB2aZnKnJvkFUTM/edit?usp=sharing）用来计算感兴趣的值。当你粘贴上原始的</a> CSV 数据时，对每一帧的渲染来说，P-X 列的数据都是有用的（所有结果的单位都是毫秒）。<h4 id="6-丢帧：主要介绍systrace工具使用。略。"><a href="#6-丢帧：主要介绍systrace工具使用。略。" class="headerlink" title="6.丢帧：主要介绍systrace工具使用。略。"></a>6.丢帧：主要介绍systrace工具使用。略。</h4><h4 id="7-感知性能"><a href="#7-感知性能" class="headerlink" title="7.感知性能"></a>7.感知性能</h4></packagename></li>
+<li>JellyBean 4.1及其以上，“黄油计划”</li>
+</ul>
+<h4 id="3-创建视图"><a href="#3-创建视图" class="headerlink" title="3.创建视图"></a>3.创建视图</h4><ul>
+<li>尽可能保持视图扁平化：重复测量（RelativeLayout和设置weight属性的LinearLayout）。<br>工具：</li>
+<li>Hierarchy Viewer : 研究视图层次，减少视图层的深度。TreeView，点击彩色venn按钮，可以加载每个view 测量、布局、绘制的具体时间. ubuntu和mac版本，均不能导出psd格式的图层（用来研究过度绘制），是hv的bug吗？。</li>
+</ul>
+<h4 id="4-资源缩减："><a href="#4-资源缩减：" class="headerlink" title="4.资源缩减："></a>4.资源缩减：</h4><p>2014年, <a href="http://instagram-engineering.tumblr.com/post/97740520316/betterandroid/" target="_blank" rel="external">Instagram将标题栏使用的资源数量从29个减少到了8个</a>。启动时间缩短了10%~20%（因设备而异）。他们通过资源着色缩减资源，也就是加载时仅加载一个资源，然后在运行时通过 ColorFilter 对资源进行着色。</p>
+<h5 id="过度绘制：屏幕的重绘"><a href="#过度绘制：屏幕的重绘" class="headerlink" title="过度绘制：屏幕的重绘"></a>过度绘制：屏幕的重绘</h5><p>检测：</p>
+<ul>
+<li>1.设置开发者选项，打开布局绘制 Debug GPU Overdraw 选项</li>
+<li>2.Hierarchy Viewer中的viewhierarchy导出为psd文件，用GIMP文件打开观察各个layer叠加情况。</li>
+<li>kk版本有过度绘制避免机制—【Overdraw Avoidance】</li>
+</ul>
+<h4 id="5-卡顿分析："><a href="#5-卡顿分析：" class="headerlink" title="5 卡顿分析："></a>5 卡顿分析：</h4><p>Android Marshmallow 在 gfxinfo 库里增加了另一个好用的测试工具:</p>
+<p><code>adb shell dumpsys gfxinfo &lt;packagename&gt; framestats</code></p>
+<p>它能够输出一张表格，该表格可以用逗号分隔每一帧事件的具体耗时。列名没有给出，但在<a href="https://developer.android.com/preview/testing/performance.html#timing-info" target="_blank" rel="external">Android开发者网站</a>里有具体的解释。为了算出渲染中每一步的耗时，必须计算出 framestats 值之间的差异。为了简化运算，我创建了一个<a href="https://docs.google.com/spreadsheets/d/1SppGcFmeZXe1IHPC9UZ83ChxhjxSB2aZnKnJvkFUTM/edit?usp=sharing" target="_blank" rel="external">电子表格</a>用来计算感兴趣的值。当你粘贴上原始的 CSV 数据时，对每一帧的渲染来说，P-X 列的数据都是有用的（所有结果的单位都是毫秒。</p>
+<h4 id="6-丢帧：主要介绍systrace工具使用。略。"><a href="#6-丢帧：主要介绍systrace工具使用。略。" class="headerlink" title="6.丢帧：主要介绍systrace工具使用。略。"></a>6.丢帧：主要介绍systrace工具使用。略。</h4><h4 id="7-感知性能"><a href="#7-感知性能" class="headerlink" title="7.感知性能"></a>7.感知性能</h4><ul>
 <li>小于1s的加载，使用进度条可能使得增长用户的延迟感；</li>
 <li>动画掩盖加载时间</li>
 <li>网络上数据上延迟，UI上立刻更新（善意谎言</li>
