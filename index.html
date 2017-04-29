@@ -238,6 +238,136 @@
             
               
                 
+                <a class="post-title-link" href="/2017/04/29/《高性能Andorid开发》笔记-屏幕和UI性能/" itemprop="url">
+                  《高性能Andorid开发》笔记 -- 屏幕和UI性能
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-29T17:52:55+08:00" content="2017-04-29">
+              2017-04-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/29/《高性能Andorid开发》笔记-屏幕和UI性能/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/29/《高性能Andorid开发》笔记-屏幕和UI性能/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h4 id="1-UI性能标准："><a href="#1-UI性能标准：" class="headerlink" title="1.UI性能标准："></a>1.UI性能标准：</h4><p>卡顿（丢帧）：1s/60fps</p>
+<h4 id="2-Android-UI和渲染性能改进历史"><a href="#2-Android-UI和渲染性能改进历史" class="headerlink" title="2.Android UI和渲染性能改进历史"></a>2.Android UI和渲染性能改进历史</h4><ul>
+<li>Honeycomb：App可以使用GPU硬件加速</li>
+<li>Ice Cream Sandwich及其以上默认开启硬件加速</li>
+<li>JellyBean 4.1及其以上，“黄油计划”<h4 id="3-创建视图："><a href="#3-创建视图：" class="headerlink" title="3.创建视图："></a>3.创建视图：</h4>尽可能保持视图扁平化：重复测量（RelativeLayout和设置weight属性的LinearLayout）。<br>工具：</li>
+<li>Hierarchy Viewer : 研究视图层次，减少视图层的深度<br>TreeView ：点击彩色venn按钮，可以加载每个view 测量、布局、绘制的具体时间.<h4 id="4-资源缩减："><a href="#4-资源缩减：" class="headerlink" title="4.资源缩减："></a>4.资源缩减：</h4>2014 年，Instagram 将标题栏使用的资源数量从 29 个减少到了 8 个（<a href="http://instagram-engineering.tumblr.com/post/97740520316/betterandroid）。启动时间缩短了" target="_blank" rel="external">http://instagram-engineering.tumblr.com/post/97740520316/betterandroid）。启动时间缩短了</a> 10%~20%（因设备而异）。他们通过资源着色缩减资源，也就是加载时仅加载一个资源，然后在运行时通过 ColorFilter 对资源进行着色。<br>过度绘制：屏幕的重绘<br>检测：<br>1.设置开发者选项，打开布局绘制 Debug GPU Overdraw 选项<br>2.Hierarchy Viewer中的viewhierarchy导出为psd文件，用GIMP文件打开观察各个layer叠加情况。<br>kk版本有过度绘制避免机制—【Overdraw Avoidance】<h4 id="5-卡顿分析："><a href="#5-卡顿分析：" class="headerlink" title="5 卡顿分析："></a>5 卡顿分析：</h4>Android Marshmallow 在 gfxinfo 库里增加了另一个好用的测试工具:<br>adb shell dumpsys gfxinfo <packagename> framestats。它能够输出一张表格，该表格可以用逗号分隔每一帧事件的具体耗时。列名没有给出，但在 Android 开发者网站（<a href="https://developer.android.com/preview/testing/performance.html#timing-info）里有具体的解释。为了算出渲染中每一步的耗时，必须计算出" target="_blank" rel="external">https://developer.android.com/preview/testing/performance.html#timing-info）里有具体的解释。为了算出渲染中每一步的耗时，必须计算出</a> framestats 值之间的差异。为了简化运算，我创建了一个电子表格（<a href="https://docs.google.com/spreadsheets/d/1SppGcFmeZXe1IHPC9UZ83ChxhjxSB2aZnKnJvkFUTM/edit?usp=sharing）用来计算感兴趣的值。当你粘贴上原始的" target="_blank" rel="external">https://docs.google.com/spreadsheets/d/1SppGcFmeZXe1IHPC9UZ83ChxhjxSB2aZnKnJvkFUTM/edit?usp=sharing）用来计算感兴趣的值。当你粘贴上原始的</a> CSV 数据时，对每一帧的渲染来说，P-X 列的数据都是有用的（所有结果的单位都是毫秒）。<h4 id="6-丢帧：主要介绍systrace工具使用。略。"><a href="#6-丢帧：主要介绍systrace工具使用。略。" class="headerlink" title="6.丢帧：主要介绍systrace工具使用。略。"></a>6.丢帧：主要介绍systrace工具使用。略。</h4><h4 id="7-感知性能"><a href="#7-感知性能" class="headerlink" title="7.感知性能"></a>7.感知性能</h4></packagename></li>
+<li>小于1s的加载，使用进度条可能使得增长用户的延迟感；</li>
+<li>动画掩盖加载时间</li>
+<li>网络上数据上延迟，UI上立刻更新（善意谎言</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/" itemprop="url">
                   《高性能Andorid开发》笔记 -- 硬件性能和电池寿命
                 </a>
@@ -1319,128 +1449,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/19/从源码的角度理解Dp/" itemprop="url">
-                  从源码的角度理解Dp
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-19T17:49:51+08:00" content="2016-08-19">
-              2016-08-19
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/19/从源码的角度理解Dp/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/19/从源码的角度理解Dp/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h4 id="Dp、Sp、Px"><a href="#Dp、Sp、Px" class="headerlink" title="Dp、Sp、Px"></a>Dp、Sp、Px</h4><p>其实它们就是个度量单位，<br>Px表示像素点， 1px = 1像素<br>Dp和Sp，都表示和屏幕密度无关，不过后者只适用于字体大小。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/19/从源码的角度理解Dp/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1486,7 +1494,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

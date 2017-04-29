@@ -84,15 +84,31 @@
 
 
 
+<meta name="description" content="1.UI性能标准：卡顿（丢帧）：1s/60fps
+2.Android UI和渲染性能改进历史
+Honeycomb：App可以使用GPU硬件加速
+Ice Cream Sandwich及其以上默认开启硬件加速
+JellyBean 4.1及其以上，“黄油计划”3.创建视图：尽可能保持视图扁平化：重复测量（RelativeLayout和设置weight属性的LinearLayout）。工具：
+Hiera">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Moon">
-<meta property="og:url" content="http://rikkko.com/2016/08/13/Moon/index.html">
+<meta property="og:title" content="《高性能Andorid开发》笔记 -- 屏幕和UI性能">
+<meta property="og:url" content="http://rikkko.com/2017/04/29/《高性能Andorid开发》笔记-屏幕和UI性能/index.html">
 <meta property="og:site_name" content="星沉海底当窗见">
-<meta property="og:image" content="http://obw36csom.bkt.clouddn.com/moon.jpg">
-<meta property="og:updated_time" content="2016-08-14T09:06:58.000Z">
+<meta property="og:description" content="1.UI性能标准：卡顿（丢帧）：1s/60fps
+2.Android UI和渲染性能改进历史
+Honeycomb：App可以使用GPU硬件加速
+Ice Cream Sandwich及其以上默认开启硬件加速
+JellyBean 4.1及其以上，“黄油计划”3.创建视图：尽可能保持视图扁平化：重复测量（RelativeLayout和设置weight属性的LinearLayout）。工具：
+Hiera">
+<meta property="og:updated_time" content="2017-04-29T10:21:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Moon">
-<meta name="twitter:image" content="http://obw36csom.bkt.clouddn.com/moon.jpg">
+<meta name="twitter:title" content="《高性能Andorid开发》笔记 -- 屏幕和UI性能">
+<meta name="twitter:description" content="1.UI性能标准：卡顿（丢帧）：1s/60fps
+2.Android UI和渲染性能改进历史
+Honeycomb：App可以使用GPU硬件加速
+Ice Cream Sandwich及其以上默认开启硬件加速
+JellyBean 4.1及其以上，“黄油计划”3.创建视图：尽可能保持视图扁平化：重复测量（RelativeLayout和设置weight属性的LinearLayout）。工具：
+Hiera">
 
 
 
@@ -113,9 +129,9 @@
 
 
 
-  <link rel="canonical" href="http://rikkko.com/2016/08/13/Moon/"/>
+  <link rel="canonical" href="http://rikkko.com/2017/04/29/《高性能Andorid开发》笔记-屏幕和UI性能/"/>
 
-  <title> Moon | 星沉海底当窗见 </title>
+  <title> 《高性能Andorid开发》笔记 -- 屏幕和UI性能 | 星沉海底当窗见 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -235,7 +251,7 @@
             
             
               
-                Moon
+                《高性能Andorid开发》笔记 -- 屏幕和UI性能
               
             
           </h1>
@@ -247,8 +263,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-13T23:40:08+08:00" content="2016-08-13">
-              2016-08-13
+            <time itemprop="dateCreated" datetime="2017-04-29T17:52:55+08:00" content="2017-04-29">
+              2017-04-29
             </time>
           </span>
 
@@ -261,8 +277,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/声色犬马/" itemprop="url" rel="index">
-                    <span itemprop="name">声色犬马</span>
+                  <a href="/categories/Android笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android笔记</span>
                   </a>
                 </span>
 
@@ -277,8 +293,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/08/13/Moon/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/13/Moon/" itemprop="commentsCount"></span>
+                <a href="/2017/04/29/《高性能Andorid开发》笔记-屏幕和UI性能/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/29/《高性能Andorid开发》笔记-屏幕和UI性能/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -301,10 +317,17 @@
       
 
       
-        <p><img src="http://obw36csom.bkt.clouddn.com/moon.jpg" alt="moon"></p>
-<a id="more"></a>
-<p>新入了EOS70D，黄昏时一个人背着相机在小区走走停停，转眼夜色降临。     </p>
-<p>自带的镜头只有135mm，小焦距已尽洪荒之力，而我想看得更<strong>清楚</strong>一些。</p>
+        <a id="more"></a>
+<h4 id="1-UI性能标准："><a href="#1-UI性能标准：" class="headerlink" title="1.UI性能标准："></a>1.UI性能标准：</h4><p>卡顿（丢帧）：1s/60fps</p>
+<h4 id="2-Android-UI和渲染性能改进历史"><a href="#2-Android-UI和渲染性能改进历史" class="headerlink" title="2.Android UI和渲染性能改进历史"></a>2.Android UI和渲染性能改进历史</h4><ul>
+<li>Honeycomb：App可以使用GPU硬件加速</li>
+<li>Ice Cream Sandwich及其以上默认开启硬件加速</li>
+<li>JellyBean 4.1及其以上，“黄油计划”<h4 id="3-创建视图："><a href="#3-创建视图：" class="headerlink" title="3.创建视图："></a>3.创建视图：</h4>尽可能保持视图扁平化：重复测量（RelativeLayout和设置weight属性的LinearLayout）。<br>工具：</li>
+<li>Hierarchy Viewer : 研究视图层次，减少视图层的深度<br>TreeView ：点击彩色venn按钮，可以加载每个view 测量、布局、绘制的具体时间.<h4 id="4-资源缩减："><a href="#4-资源缩减：" class="headerlink" title="4.资源缩减："></a>4.资源缩减：</h4>2014 年，Instagram 将标题栏使用的资源数量从 29 个减少到了 8 个（<a href="http://instagram-engineering.tumblr.com/post/97740520316/betterandroid）。启动时间缩短了" target="_blank" rel="external">http://instagram-engineering.tumblr.com/post/97740520316/betterandroid）。启动时间缩短了</a> 10%~20%（因设备而异）。他们通过资源着色缩减资源，也就是加载时仅加载一个资源，然后在运行时通过 ColorFilter 对资源进行着色。<br>过度绘制：屏幕的重绘<br>检测：<br>1.设置开发者选项，打开布局绘制 Debug GPU Overdraw 选项<br>2.Hierarchy Viewer中的viewhierarchy导出为psd文件，用GIMP文件打开观察各个layer叠加情况。<br>kk版本有过度绘制避免机制—【Overdraw Avoidance】<h4 id="5-卡顿分析："><a href="#5-卡顿分析：" class="headerlink" title="5 卡顿分析："></a>5 卡顿分析：</h4>Android Marshmallow 在 gfxinfo 库里增加了另一个好用的测试工具:<br>adb shell dumpsys gfxinfo <packagename> framestats。它能够输出一张表格，该表格可以用逗号分隔每一帧事件的具体耗时。列名没有给出，但在 Android 开发者网站（<a href="https://developer.android.com/preview/testing/performance.html#timing-info）里有具体的解释。为了算出渲染中每一步的耗时，必须计算出" target="_blank" rel="external">https://developer.android.com/preview/testing/performance.html#timing-info）里有具体的解释。为了算出渲染中每一步的耗时，必须计算出</a> framestats 值之间的差异。为了简化运算，我创建了一个电子表格（<a href="https://docs.google.com/spreadsheets/d/1SppGcFmeZXe1IHPC9UZ83ChxhjxSB2aZnKnJvkFUTM/edit?usp=sharing）用来计算感兴趣的值。当你粘贴上原始的" target="_blank" rel="external">https://docs.google.com/spreadsheets/d/1SppGcFmeZXe1IHPC9UZ83ChxhjxSB2aZnKnJvkFUTM/edit?usp=sharing）用来计算感兴趣的值。当你粘贴上原始的</a> CSV 数据时，对每一帧的渲染来说，P-X 列的数据都是有用的（所有结果的单位都是毫秒）。<h4 id="6-丢帧：主要介绍systrace工具使用。略。"><a href="#6-丢帧：主要介绍systrace工具使用。略。" class="headerlink" title="6.丢帧：主要介绍systrace工具使用。略。"></a>6.丢帧：主要介绍systrace工具使用。略。</h4><h4 id="7-感知性能"><a href="#7-感知性能" class="headerlink" title="7.感知性能"></a>7.感知性能</h4></packagename></li>
+<li>小于1s的加载，使用进度条可能使得增长用户的延迟感；</li>
+<li>动画掩盖加载时间</li>
+<li>网络上数据上延迟，UI上立刻更新（善意谎言</li>
+</ul>
 
       
     </div>
@@ -330,17 +353,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/07/My-Valentines-Day/" rel="next" title="My Valentines Day ">
-                <i class="fa fa-chevron-left"></i> My Valentines Day 
+              <a href="/2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/" rel="next" title="《高性能Andorid开发》笔记 -- 硬件性能和电池寿命">
+                <i class="fa fa-chevron-left"></i> 《高性能Andorid开发》笔记 -- 硬件性能和电池寿命
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/17/种蘑菇/" rel="prev" title="种蘑菇">
-                种蘑菇 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -366,8 +385,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/08/13/Moon/"
-           data-title="Moon" data-url="http://rikkko.com/2016/08/13/Moon/">
+      <div class="ds-thread" data-thread-key="2017/04/29/《高性能Andorid开发》笔记-屏幕和UI性能/"
+           data-title="《高性能Andorid开发》笔记 -- 屏幕和UI性能" data-url="http://rikkko.com/2017/04/29/《高性能Andorid开发》笔记-屏幕和UI性能/">
       </div>
     
   </div>
@@ -480,7 +499,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-UI性能标准："><span class="nav-number">1.</span> <span class="nav-text">1.UI性能标准：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Android-UI和渲染性能改进历史"><span class="nav-number">2.</span> <span class="nav-text">2.Android UI和渲染性能改进历史</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-创建视图："><span class="nav-number">3.</span> <span class="nav-text">3.创建视图：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-资源缩减："><span class="nav-number">4.</span> <span class="nav-text">4.资源缩减：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-卡顿分析："><span class="nav-number">5.</span> <span class="nav-text">5 卡顿分析：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-丢帧：主要介绍systrace工具使用。略。"><span class="nav-number">6.</span> <span class="nav-text">6.丢帧：主要介绍systrace工具使用。略。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-感知性能"><span class="nav-number">7.</span> <span class="nav-text">7.感知性能</span></a></li></ol></div>
             
           </div>
         </section>
