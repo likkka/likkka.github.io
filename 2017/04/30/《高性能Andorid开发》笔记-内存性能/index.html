@@ -106,7 +106,7 @@ Zygote共享内存：公共框架类、资源以及本地类库（节省内存�
 
 垃圾回收
 Gingerbread之前：stop-worldGingerbrea">
-<meta property="og:updated_time" content="2017-04-30T09:11:48.000Z">
+<meta property="og:updated_time" content="2017-04-30T09:14:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《高性能Andorid开发》笔记 -- 内存性能">
 <meta name="twitter:description" content="1. Android内存：如何工作
@@ -336,10 +336,11 @@ Gingerbread之前：stop-worldGingerbrea">
 <li><p>垃圾回收</p>
 <p>Gingerbread之前：stop-world<br>Gingerbread: 布局回收<br>KitKat及其之前：标记回收（内存碎片）<br>KitKat之后：移动复制  </p>
 </li>
-<li><p>确定应用使用的内存大小   </p>
-<figure class="highlight plain"><figcaption><span>shell dumpsys meminfo```   </span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">dump出来的是pss数据，什么是pss呢？[参考](http://blog.csdn.net/fengye810130/article/details/9330287)解释如下：    </div><div class="line">**VSS** - Virtual Set Size 虚拟耗用内存（包含共享库占用的内存）  </div><div class="line">**RSS** - Resident Set Size 实际使用物理内存（包含共享库占用的内存）  </div><div class="line">**PSS** - Proportional Set Size 实际使用的物理内存（比例分配共享库占用的内存）    </div><div class="line">**USS** - Unique Set Size 进程独自占用的物理内存（不包含共享库占用的内存）         </div><div class="line">* procstats 了解程序在后台一段时间的内存使用量    </div><div class="line">路径：设置-开发者选项-进程统计     </div><div class="line">``` adb shell dumpsys procstats</div></pre></td></tr></table></figure>
+<li><p>确定应用使用的内存大小<br><code>adb shell dumpsys meminfo</code><br>dump出来的是pss数据，什么是pss呢？<a href="http://blog.csdn.net/fengye810130/article/details/9330287" target="_blank" rel="external">参考</a>解释如下：<br><strong>VSS</strong> - Virtual Set Size 虚拟耗用内存（包含共享库占用的内存）<br><strong>RSS</strong> - Resident Set Size 实际使用物理内存（包含共享库占用的内存）<br><strong>PSS</strong> - Proportional Set Size 实际使用的物理内存（比例分配共享库占用的内存）<br><strong>USS</strong> - Unique Set Size 进程独自占用的物理内存（不包含共享库占用的内存）         </p>
 </li>
-<li><p>内存警告<br><strong>onTrimMemory </strong>有以下警告：</p>
+<li><p>procstats 了解程序在后台一段时间的内存使用量<br>路径：设置-开发者选项-进程统计<br><code>adb shell dumpsys procstats</code>   </p>
+</li>
+<li><p>内存警告<br><strong>onTrimMemory</strong>有以下警告：</p>
 <blockquote>
 <p>TRIM_MEMORY_RUNNING_MODERATE<br>首先发出 TRIM_MEMORY_RUNNING_MODERATE 警告。<br>TRIM_MEMORY_RUNNING_LOW<br>如果继续执行，将会发出 TRIM_MEMORY_RUNNING_LOW 警告，就像是黄灯警示。这时系统会开始释放资源 4 来提高系统性能。<br>TRIM_MEMORY_RUNNING_CRITICAL<br>如果仍然继续执行并且没有释放资源，将会发出红灯警。此时，系统会结束后台进程以获取更多的内存。同时，这将降低 App 的性能。<br>TRIM_MEMORY_UI_HIDDEN<br>当回调 TRIM_MEMORY_UI_HIDDEN 时，App 刚从前台转为后台，这是释放大量 UI 资源的大好时机。此时 App 在缓存的 App 列表中。如果有问题，此 App 的进程将会被结束。作为一个后台程序，尽可能多地释放资源，这样的恢复会比纯粹的重启 5 更加快速。其中有 3 个级别：<br>TRIM_MEMORY_BACKGROUND<br>TRIM_MEMORY_MODERATE<br>TRIM_MEMORY_COMPLETE</p>
 </blockquote>
