@@ -84,19 +84,40 @@
 
 
 
-<meta name="description" content="中午随便白灼了些秋葵和木耳，无聊又拿起相机。">
+<meta name="description" content="1. Android内存：如何工作
+共享内存&amp;amp;私有内存
+Zygote共享内存：公共框架类、资源以及本地类库（节省内存）。App启动时，fork一个Zygote进程，这样App初始化就快多了。
+
+脏内存和干净内存
+脏内存：仅存在于RAM（Dalvik运行时编译）干净内存：存在于RAM和磁盘上（ART安装时编译）
+
+垃圾回收
+Gingerbread之前：stop-worldGingerbrea">
 <meta property="og:type" content="article">
-<meta property="og:title" content="My Valentines Day ">
-<meta property="og:url" content="http://rikkko.com/2016/08/07/My-Valentines-Day/index.html">
+<meta property="og:title" content="《高性能Andorid开发》笔记 -- 内存性能">
+<meta property="og:url" content="http://rikkko.com/2017/04/30/《高性能Andorid开发》笔记-内存性能/index.html">
 <meta property="og:site_name" content="星沉海底当窗见">
-<meta property="og:description" content="中午随便白灼了些秋葵和木耳，无聊又拿起相机。">
-<meta property="og:image" content="http://obw36csom.bkt.clouddn.com/flammulina.jpg">
-<meta property="og:image" content="http://obw36csom.bkt.clouddn.com/gumbos.jpg">
-<meta property="og:updated_time" content="2016-08-19T10:30:06.000Z">
+<meta property="og:description" content="1. Android内存：如何工作
+共享内存&amp;amp;私有内存
+Zygote共享内存：公共框架类、资源以及本地类库（节省内存）。App启动时，fork一个Zygote进程，这样App初始化就快多了。
+
+脏内存和干净内存
+脏内存：仅存在于RAM（Dalvik运行时编译）干净内存：存在于RAM和磁盘上（ART安装时编译）
+
+垃圾回收
+Gingerbread之前：stop-worldGingerbrea">
+<meta property="og:updated_time" content="2017-04-30T09:11:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="My Valentines Day ">
-<meta name="twitter:description" content="中午随便白灼了些秋葵和木耳，无聊又拿起相机。">
-<meta name="twitter:image" content="http://obw36csom.bkt.clouddn.com/flammulina.jpg">
+<meta name="twitter:title" content="《高性能Andorid开发》笔记 -- 内存性能">
+<meta name="twitter:description" content="1. Android内存：如何工作
+共享内存&amp;amp;私有内存
+Zygote共享内存：公共框架类、资源以及本地类库（节省内存）。App启动时，fork一个Zygote进程，这样App初始化就快多了。
+
+脏内存和干净内存
+脏内存：仅存在于RAM（Dalvik运行时编译）干净内存：存在于RAM和磁盘上（ART安装时编译）
+
+垃圾回收
+Gingerbread之前：stop-worldGingerbrea">
 
 
 
@@ -117,9 +138,9 @@
 
 
 
-  <link rel="canonical" href="http://rikkko.com/2016/08/07/My-Valentines-Day/"/>
+  <link rel="canonical" href="http://rikkko.com/2017/04/30/《高性能Andorid开发》笔记-内存性能/"/>
 
-  <title> My Valentines Day  | 星沉海底当窗见 </title>
+  <title> 《高性能Andorid开发》笔记 -- 内存性能 | 星沉海底当窗见 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -239,7 +260,7 @@
             
             
               
-                My Valentines Day 
+                《高性能Andorid开发》笔记 -- 内存性能
               
             
           </h1>
@@ -251,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-07T16:52:42+08:00" content="2016-08-07">
-              2016-08-07
+            <time itemprop="dateCreated" datetime="2017-04-30T16:51:04+08:00" content="2017-04-30">
+              2017-04-30
             </time>
           </span>
 
@@ -265,8 +286,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/声色犬马/" itemprop="url" rel="index">
-                    <span itemprop="name">声色犬马</span>
+                  <a href="/categories/Android笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android笔记</span>
                   </a>
                 </span>
 
@@ -281,8 +302,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/08/07/My-Valentines-Day/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/07/My-Valentines-Day/" itemprop="commentsCount"></span>
+                <a href="/2017/04/30/《高性能Andorid开发》笔记-内存性能/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/30/《高性能Andorid开发》笔记-内存性能/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -305,13 +326,30 @@
       
 
       
-        <p>中午随便白灼了些秋葵和木耳，无聊又拿起相机。</p>
-<p><img src="http://obw36csom.bkt.clouddn.com/flammulina.jpg" alt=""></p>
-<a id="more"></a>
-<p><img src="http://obw36csom.bkt.clouddn.com/gumbos.jpg" alt=""></p>
-<p>下午和<strong>友人</strong>一起去咖啡馆学习，<strong>友人</strong>点了<strong>冰摩卡</strong>，只喝了一点。我在看具体数学，对面在看准备的资料。  </p>
-<p>吃完披萨，磨蹭到夜幕降临，我们在咖啡馆门口分别向左走向右走告别，</p>
-<p>当时咖啡馆里悲伤的音乐回荡，竟让我产生一丝忧郁的情绪。</p>
+        <h4 id="1-Android内存：如何工作"><a href="#1-Android内存：如何工作" class="headerlink" title="1. Android内存：如何工作"></a>1. Android内存：如何工作</h4><ul>
+<li><p>共享内存&amp;私有内存</p>
+<p>Zygote共享内存：公共框架类、资源以及本地类库（<em>节省内存</em>）。App启动时，fork一个Zygote进程，这样App初始化就快多了。</p>
+</li>
+<li><p>脏内存和干净内存</p>
+<p>脏内存：仅存在于RAM（Dalvik运行时编译）<br>干净内存：存在于RAM和磁盘上（ART安装时编译）</p>
+</li>
+<li><p>垃圾回收</p>
+<p>Gingerbread之前：stop-world<br>Gingerbread: 布局回收<br>KitKat及其之前：标记回收（内存碎片）<br>KitKat之后：移动复制  </p>
+</li>
+<li><p>确定应用使用的内存大小   </p>
+<figure class="highlight plain"><figcaption><span>shell dumpsys meminfo```   </span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">dump出来的是pss数据，什么是pss呢？[参考](http://blog.csdn.net/fengye810130/article/details/9330287)解释如下：    </div><div class="line">**VSS** - Virtual Set Size 虚拟耗用内存（包含共享库占用的内存）  </div><div class="line">**RSS** - Resident Set Size 实际使用物理内存（包含共享库占用的内存）  </div><div class="line">**PSS** - Proportional Set Size 实际使用的物理内存（比例分配共享库占用的内存）    </div><div class="line">**USS** - Unique Set Size 进程独自占用的物理内存（不包含共享库占用的内存）         </div><div class="line">* procstats 了解程序在后台一段时间的内存使用量    </div><div class="line">路径：设置-开发者选项-进程统计     </div><div class="line">``` adb shell dumpsys procstats</div></pre></td></tr></table></figure>
+</li>
+<li><p>内存警告<br><strong>onTrimMemory </strong>有以下警告：</p>
+<blockquote>
+<p>TRIM_MEMORY_RUNNING_MODERATE<br>首先发出 TRIM_MEMORY_RUNNING_MODERATE 警告。<br>TRIM_MEMORY_RUNNING_LOW<br>如果继续执行，将会发出 TRIM_MEMORY_RUNNING_LOW 警告，就像是黄灯警示。这时系统会开始释放资源 4 来提高系统性能。<br>TRIM_MEMORY_RUNNING_CRITICAL<br>如果仍然继续执行并且没有释放资源，将会发出红灯警。此时，系统会结束后台进程以获取更多的内存。同时，这将降低 App 的性能。<br>TRIM_MEMORY_UI_HIDDEN<br>当回调 TRIM_MEMORY_UI_HIDDEN 时，App 刚从前台转为后台，这是释放大量 UI 资源的大好时机。此时 App 在缓存的 App 列表中。如果有问题，此 App 的进程将会被结束。作为一个后台程序，尽可能多地释放资源，这样的恢复会比纯粹的重启 5 更加快速。其中有 3 个级别：<br>TRIM_MEMORY_BACKGROUND<br>TRIM_MEMORY_MODERATE<br>TRIM_MEMORY_COMPLETE</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="2-内存泄露"><a href="#2-内存泄露" class="headerlink" title="2. 内存泄露"></a>2. 内存泄露</h4><h4 id="3-追踪内存泄露工具"><a href="#3-追踪内存泄露工具" class="headerlink" title="3. 追踪内存泄露工具"></a>3. 追踪内存泄露工具</h4><ul>
+<li>Heap Dump:查看什么类型数据被分配到内存中</li>
+<li>Allocation Tracker:查看具体方法时分配了什么对象</li>
+<li>MAT和LeakCanary：</li>
+</ul>
 
       
     </div>
@@ -337,13 +375,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/04/29/《高性能Andorid开发》笔记-屏幕和UI性能/" rel="next" title="《高性能Andorid开发》笔记 -- 屏幕和UI性能">
+                <i class="fa fa-chevron-left"></i> 《高性能Andorid开发》笔记 -- 屏幕和UI性能
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/13/Moon/" rel="prev" title="Moon">
-                Moon <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -369,8 +407,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/08/07/My-Valentines-Day/"
-           data-title="My Valentines Day " data-url="http://rikkko.com/2016/08/07/My-Valentines-Day/">
+      <div class="ds-thread" data-thread-key="2017/04/30/《高性能Andorid开发》笔记-内存性能/"
+           data-title="《高性能Andorid开发》笔记 -- 内存性能" data-url="http://rikkko.com/2017/04/30/《高性能Andorid开发》笔记-内存性能/">
       </div>
     
   </div>
@@ -483,7 +521,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Android内存：如何工作"><span class="nav-number">1.</span> <span class="nav-text">1. Android内存：如何工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-内存泄露"><span class="nav-number">2.</span> <span class="nav-text">2. 内存泄露</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-追踪内存泄露工具"><span class="nav-number">3.</span> <span class="nav-text">3. 追踪内存泄露工具</span></a></li></ol></div>
             
           </div>
         </section>

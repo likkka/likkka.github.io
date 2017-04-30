@@ -238,6 +238,149 @@
             
               
                 
+                <a class="post-title-link" href="/2017/04/30/《高性能Andorid开发》笔记-内存性能/" itemprop="url">
+                  《高性能Andorid开发》笔记 -- 内存性能
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-30T16:51:04+08:00" content="2017-04-30">
+              2017-04-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/30/《高性能Andorid开发》笔记-内存性能/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/30/《高性能Andorid开发》笔记-内存性能/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="1-Android内存：如何工作"><a href="#1-Android内存：如何工作" class="headerlink" title="1. Android内存：如何工作"></a>1. Android内存：如何工作</h4><ul>
+<li><p>共享内存&amp;私有内存</p>
+<p>Zygote共享内存：公共框架类、资源以及本地类库（<em>节省内存</em>）。App启动时，fork一个Zygote进程，这样App初始化就快多了。</p>
+</li>
+<li><p>脏内存和干净内存</p>
+<p>脏内存：仅存在于RAM（Dalvik运行时编译）<br>干净内存：存在于RAM和磁盘上（ART安装时编译）</p>
+</li>
+<li><p>垃圾回收</p>
+<p>Gingerbread之前：stop-world<br>Gingerbread: 布局回收<br>KitKat及其之前：标记回收（内存碎片）<br>KitKat之后：移动复制  </p>
+</li>
+<li><p>确定应用使用的内存大小   </p>
+<figure class="highlight plain"><figcaption><span>shell dumpsys meminfo```   </span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">dump出来的是pss数据，什么是pss呢？[参考](http://blog.csdn.net/fengye810130/article/details/9330287)解释如下：    </div><div class="line">**VSS** - Virtual Set Size 虚拟耗用内存（包含共享库占用的内存）  </div><div class="line">**RSS** - Resident Set Size 实际使用物理内存（包含共享库占用的内存）  </div><div class="line">**PSS** - Proportional Set Size 实际使用的物理内存（比例分配共享库占用的内存）    </div><div class="line">**USS** - Unique Set Size 进程独自占用的物理内存（不包含共享库占用的内存）         </div><div class="line">* procstats 了解程序在后台一段时间的内存使用量    </div><div class="line">路径：设置-开发者选项-进程统计     </div><div class="line">``` adb shell dumpsys procstats</div></pre></td></tr></table></figure>
+</li>
+<li><p>内存警告<br><strong>onTrimMemory </strong>有以下警告：</p>
+<blockquote>
+<p>TRIM_MEMORY_RUNNING_MODERATE<br>首先发出 TRIM_MEMORY_RUNNING_MODERATE 警告。<br>TRIM_MEMORY_RUNNING_LOW<br>如果继续执行，将会发出 TRIM_MEMORY_RUNNING_LOW 警告，就像是黄灯警示。这时系统会开始释放资源 4 来提高系统性能。<br>TRIM_MEMORY_RUNNING_CRITICAL<br>如果仍然继续执行并且没有释放资源，将会发出红灯警。此时，系统会结束后台进程以获取更多的内存。同时，这将降低 App 的性能。<br>TRIM_MEMORY_UI_HIDDEN<br>当回调 TRIM_MEMORY_UI_HIDDEN 时，App 刚从前台转为后台，这是释放大量 UI 资源的大好时机。此时 App 在缓存的 App 列表中。如果有问题，此 App 的进程将会被结束。作为一个后台程序，尽可能多地释放资源，这样的恢复会比纯粹的重启 5 更加快速。其中有 3 个级别：<br>TRIM_MEMORY_BACKGROUND<br>TRIM_MEMORY_MODERATE<br>TRIM_MEMORY_COMPLETE</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="2-内存泄露"><a href="#2-内存泄露" class="headerlink" title="2. 内存泄露"></a>2. 内存泄露</h4><h4 id="3-追踪内存泄露工具"><a href="#3-追踪内存泄露工具" class="headerlink" title="3. 追踪内存泄露工具"></a>3. 追踪内存泄露工具</h4><ul>
+<li>Heap Dump:查看什么类型数据被分配到内存中</li>
+<li>Allocation Tracker:查看具体方法时分配了什么对象</li>
+<li>MAT和LeakCanary：</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/04/29/《高性能Andorid开发》笔记-屏幕和UI性能/" itemprop="url">
                   《高性能Andorid开发》笔记 -- 屏幕和UI性能
                 </a>
@@ -1342,128 +1485,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/06/君自故乡来/" itemprop="url">
-                  君自故乡来
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-06T18:56:34+08:00" content="2016-09-06">
-              2016-09-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/何当共剪西窗烛/" itemprop="url" rel="index">
-                    <span itemprop="name">何当共剪西窗烛</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/06/君自故乡来/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/06/君自故乡来/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="http://obw36csom.bkt.clouddn.com/WechatIMG2065.jpeg" alt=""><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/06/君自故乡来/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1509,7 +1530,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
