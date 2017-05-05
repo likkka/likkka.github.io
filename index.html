@@ -238,6 +238,130 @@
             
               
                 
+                <a class="post-title-link" href="/2017/05/05/记一次坑爹的数据库查询/" itemprop="url">
+                  记一次坑爹的数据库查询
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-05T22:58:02+08:00" content="2017-05-05">
+              2017-05-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/05/记一次坑爹的数据库查询/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/05/记一次坑爹的数据库查询/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Cursor c = context.getContentResolver().query(mQureyUri,</div><div class="line">       new String[]&#123;CATEGORYID, CATEGORY2ID&#125;, PKG_NAME + &quot;=?&quot;, new String[]&#123;pkg&#125;, null, null);</div><div class="line">if (c == null) &#123;</div><div class="line">   Log.i(TAG, &quot;can&apos;t find &quot; + pkg + &quot;&apos;s category&quot;);</div><div class="line">   return -1;</div><div class="line">&#125;</div><div class="line">int categoryId = c.getInt(c.getColumnIndex(CATEGORYID));</div></pre></td></tr></table></figure>
+<p>因为业务需要查询数据库，但是运行之后报错<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android.database.CursorIndexOutOfBoundsException: Index -1 requested, with a size of 1</div></pre></td></tr></table></figure></p>
+<p>和维护数据库的同事交涉许久，以为是他给的uri路径不对，最后他一语点醒梦中人，</p>
+<p>“你没加<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">吧.</div><div class="line">“</div><div class="line">好吧，不得不承认读写数据库的水品是差了点。</div><div class="line">查了一下，[Stackoverflow](http://stackoverflow.com/questions/24177570/i-cant-get-data-from-cursor-object)网上有人和我碰到相同的问题.</div><div class="line"></div><div class="line"></div><div class="line">接着看文档里是说，调用此方法，使得cursor移动到第一行，</div><div class="line"></div><div class="line">&gt;moveToFirst</div><div class="line">&gt;added in API level 1</div><div class="line">&gt;boolean moveToFirst ()</div><div class="line">&gt;Move the cursor to the first row.</div><div class="line">&gt;This method will return false if the cursor is empty.</div><div class="line">&gt;Returns</div><div class="line">&gt;boolean	whether the move succeeded.</div></pre></td></tr></table></figure></p>
+<p>因为返回的cursor默认的位置是在 <strong>-1</strong> 行，这就是为什么while(cursor.moveToNext())也不会把第一行数据漏遍历的秘密。 = = 。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/04/30/《高性能Andorid开发》笔记-内存性能/" itemprop="url">
                   《高性能Andorid开发》笔记 -- 内存性能
                 </a>
@@ -1364,128 +1488,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/25/Hi-R-O-K/" itemprop="url">
-                  Hi, R.O.K
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-25T17:14:13+08:00" content="2016-09-25">
-              2016-09-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/CASABALACA/" itemprop="url" rel="index">
-                    <span itemprop="name">CASABALACA</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/25/Hi-R-O-K/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/25/Hi-R-O-K/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="/images/sk-icecream.jpeg" alt=""><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/25/Hi-R-O-K/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1531,7 +1533,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">17</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
