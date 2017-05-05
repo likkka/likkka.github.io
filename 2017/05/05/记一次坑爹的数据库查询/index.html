@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://rikkko.com/2017/05/05/记一次坑爹的数据库查询/index.html">
 <meta property="og:site_name" content="星沉海底当窗见">
 <meta property="og:description" content="1234567Cursor c = context.getContentResolver().query(mQureyUri,       new String[]&amp;#123;CATEGORYID, CATEGORY2ID&amp;#125;, PKG_NAME + &amp;quot;=?&amp;quot;, new String[]&amp;#123;pkg&amp;#125;, null, null);if (c == null">
-<meta property="og:updated_time" content="2017-05-05T15:08:48.000Z">
+<meta property="og:updated_time" content="2017-05-05T15:10:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次坑爹的数据库查询">
 <meta name="twitter:description" content="1234567Cursor c = context.getContentResolver().query(mQureyUri,       new String[]&amp;#123;CATEGORYID, CATEGORY2ID&amp;#125;, PKG_NAME + &amp;quot;=?&amp;quot;, new String[]&amp;#123;pkg&amp;#125;, null, null);if (c == null">
@@ -305,7 +305,7 @@
         <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Cursor c = context.getContentResolver().query(mQureyUri,</div><div class="line">       new String[]&#123;CATEGORYID, CATEGORY2ID&#125;, PKG_NAME + &quot;=?&quot;, new String[]&#123;pkg&#125;, null, null);</div><div class="line">if (c == null) &#123;</div><div class="line">   Log.i(TAG, &quot;can&apos;t find &quot; + pkg + &quot;&apos;s category&quot;);</div><div class="line">   return -1;</div><div class="line">&#125;</div><div class="line">int categoryId = c.getInt(c.getColumnIndex(CATEGORYID));</div></pre></td></tr></table></figure>
 <p>因为业务需要查询数据库，但是运行之后报错<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android.database.CursorIndexOutOfBoundsException: Index -1 requested, with a size of 1</div></pre></td></tr></table></figure></p>
 <p>和维护数据库的同事交涉许久，以为是他给的uri路径不对，最后他一语点醒梦中人，</p>
-<p>“你没加<strong>cursor.moveToFirst()</strong>吧.“</p>
+<p>你没加[<strong>cursor.moveToFirst()</strong>]吧.</p>
 <p>好吧，不得不承认读写数据库的水品是差了点。<br><a href="http://stackoverflow.com/questions/24177570/i-cant-get-data-from-cursor-object" target="_blank" rel="external">Stackoverflow</a>有人和我碰到相同的问题.</p>
 <p>接着看文档里是说，调用此方法，使得cursor移动到第一行，</p>
 <blockquote>
