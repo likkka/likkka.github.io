@@ -315,7 +315,7 @@
 <p>好吧，不得不承认读写数据库的水品是差了点。<br><a href="http://stackoverflow.com/questions/24177570/i-cant-get-data-from-cursor-object" target="_blank" rel="external">Stackoverflow</a>有人和我碰到相同的问题.</p>
 <p>接着看文档里是说，调用此方法，使得cursor移动到第一行，</p>
 <blockquote>
-<p>moveToFirst<br>added in API level 1<br>boolean moveToFirst ()<br>Move the cursor to the first row.<br>This method will return false if the cursor is empty.<br>Returns<br>boolean    whether the move succeeded.<br>```</p>
+<p>moveToFirst<br>added in API level 1<br>boolean moveToFirst ()<br>Move the cursor to the first row.<br>This method will return false if the cursor is empty.<br>Returns<br>boolean    whether the move succeeded.</p>
 </blockquote>
 <p>因为返回的cursor默认的位置是在 <strong>-1</strong> 行，这就是为什么while(cursor.moveToNext())也不会把第一行数据漏遍历的秘密。 = = 。</p>
 
