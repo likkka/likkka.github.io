@@ -108,7 +108,7 @@ App唤醒设备的接口和方式：Wak">
     fancybox: true,
     motion: true,
     duoshuo: {
-      userId: 0,
+      userId: undefined,
       author: '博主'
     }
   };
@@ -282,7 +282,7 @@ App唤醒设备的接口和方式：Wak">
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
                 <a href="/2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -333,25 +333,7 @@ App唤醒设备的接口和方式：Wak">
     <footer class="post-footer">
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/03/11/往事不可追/" rel="next" title="往事不可追">
-                <i class="fa fa-chevron-left"></i> 往事不可追
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/29/《高性能Andorid开发》笔记-屏幕和UI性能/" rel="prev" title="《高性能Andorid开发》笔记 -- 屏幕和UI性能">
-                《高性能Andorid开发》笔记 -- 屏幕和UI性能 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
+   
 
       
       
@@ -373,8 +355,11 @@ App唤醒设备的接口和方式：Wak">
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/"
-           data-title="《高性能Andorid开发》笔记 -- 硬件性能和电池寿命" data-url="http://likkka.github.io/2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
       </div>
     
   </div>
@@ -608,30 +593,30 @@ App唤醒设备的接口和方式：Wak">
 
   
 
-  
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"rio"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
-    
-    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
 
 
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'zhazhatu';
+      var disqus_identifier = '2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/';
+      var disqus_title = "《高性能Andorid开发》笔记 -- 硬件性能和电池寿命";
+      var disqus_url = 'http://likkka.github.io/2017/04/22/《高性能Andorid开发》笔记-硬件性能和电池寿命/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
 
 
 
